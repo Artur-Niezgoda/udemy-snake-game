@@ -2,6 +2,11 @@ from turtle import Turtle
 
 INIT_NO = 3
 MOVE_DISTANCE = 20
+UP = 90
+DOWN = 270
+LEFT = 180
+RIGHT = 0
+
 
 class Snake:
     """_summary_
@@ -26,19 +31,17 @@ class Snake:
         self.head.forward(MOVE_DISTANCE)
 
     def up(self):
-        self.head.setheading(90)
+        if self.head.heading() != DOWN:
+            self.head.setheading(90)
 
     def down(self):
-        self.head.setheading(270)
+        if self.head.heading() != UP:
+            self.head.setheading(270)
 
     def left(self):
-        self.head.setheading(180)
+        if self.head.heading() != RIGHT:
+            self.head.setheading(180)
 
     def right(self):
-        self.head.setheading(0)
-        # if key == "Left":
-        #     self.segments[0].setheading(180)
-        # if key == "Down":
-        #     self.segments[0].setheading(270)
-        # if key == "Right":
-        #     self.segments[0].setheading(0)
+        if self.head.heading() != LEFT:    
+            self.head.setheading(0)
