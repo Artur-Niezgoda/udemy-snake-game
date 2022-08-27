@@ -5,10 +5,10 @@ Classes:
     Border(Turtle)
 
 Methods:
-    game_over()
-        Print 'Game Over' and ends the game if head hits wall or snake's body
+    reset()
+        Compare score with highscore and replace if that's the case, then reset the score
     display_score()
-        Display score on top of the screen
+        Display score and highscore on top of the screen
 
 Constants:
     ALIGN
@@ -36,6 +36,7 @@ class Scoreboard(Turtle):
 
     Attributes:
         score (int): initial score, default 0 
+        highscore (int): highest score ever achieved
     """
     def __init__(self):
         """Creates object that displays score
@@ -43,23 +44,34 @@ class Scoreboard(Turtle):
 
         super().__init__()
         self.score = 0
+        with open("data.txt") as data:
+            self.highscore = int(data.read())
         self.color("white")
         self.penup()
         self.hideturtle()
         self.goto(0, 290)
 
-    def game_over(self):
-        """Display 'Game Over' and ends the game when snake hits wall or tail
+    # def game_over(self):
+    #     """Display 'Game Over' and ends the game when snake hits wall or tail
+    #     """
+
+    #     self.goto(0,0)
+    #     self.write("Game Over", align="center", font=("Times New Roman", 20, "bold"))
+
+    def reset(self):
+        """Compare score with highscore and replace if that's the case, then reset the score
         """
+        if self.score > self.highscore:
+            self.highscore = self.score
+            with open("data.txt", mode="w") as data:
+                data.write(f"{self.highscore}")
+        self.score = 0
+        self.display_score()
 
-        self.goto(0,0)
-        self.write("Game Over", align="center", font=("Times New Roman", 20, "bold"))
-        
     def display_score(self):
-        """Display score on top of the screen"""
-
+        """Display score and highscore on top of the screen"""
         self.clear()
-        self.write("Score: "+ str(self.score), align="center", font=("Times New Roman", 20, "bold"))
+        self.write(f"Score: {self.score} High Score: {self.highscore}", align="center", font=("Times New Roman", 20, "bold"))
 
     
 

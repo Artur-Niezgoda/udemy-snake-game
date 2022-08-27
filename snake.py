@@ -10,6 +10,8 @@ Methods:
         add a segment to a snake
     extend()
         extend snake when eats food
+    reset()
+        reset snake to the initial size and position
     up()
         turn up
     down()
@@ -52,16 +54,24 @@ class Snake:
     """
 
     def __init__(self):
-        """Constructs all the necessary attributes for the object snake
+        """Construct all the necessary attributes for the object snake
         """
 
         self.segments = []
         self.create_snake()
         self.head = self.segments[0]
 
+    def reset(self):
+        """Reset the snake to its initial size and position"""
+        
+        for seg in self.segments:
+            seg.hideturtle()
+        self.segments.clear()
+        self.create_snake()
+        self.head= self.segments[0]
 
     def create_snake(self):
-        """Creates parts of the snakes body
+        """Create parts of the snakes body
         """
 
         for position in STARTING_POSITIONS:
@@ -69,7 +79,7 @@ class Snake:
             
     
     def add_segment(self, position):
-        """Creates new Turtle object as a segment of the snake's body.
+        """Create new Turtle object as a segment of the snake's body.
 
         Args:
             position (tuple): tuple of ints pointing to where the new segment
