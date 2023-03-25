@@ -18,8 +18,7 @@ scoreboard = Scoreboard()
 scoreboard.display_score()
 border = Border()
 
-
-# Screen update after creating snake and key rules:
+# Set up key bindings for controlling the snake's direction
 screen.update()
 screen.listen()
 screen.onkey(snake.up, "Up")
@@ -31,23 +30,28 @@ game_is_on = True
 while game_is_on:
     screen.update()
     time.sleep(0.05)
-    snake.move()  # snake moves constantly
 
-    # Snake eating food
+    # Move the snake forward
+    snake.move()
+
+    # Check if the snake has eaten the food
     if snake.head.distance(food) < 15:
+        # Refresh the food and update the score
         food.refresh()
         scoreboard.score += 1
         scoreboard.display_score()
         snake.extend()
     
-    # Collision with walls
+    # Check if the snake has collided with the walls
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() < -280 or snake.head.ycor() > 280:
+        # Reset the score and snake if it has collided
         scoreboard.reset()
         snake.reset()
 
-    # Collision with body
+    # Check if the snake has collided with its own body
     for segment in snake.segments[1:]:
         if snake.head.distance(segment) < 10:
+            # Reset the score and snake if it has collided
             scoreboard.reset()
             snake.reset()
 
