@@ -25,23 +25,22 @@ from turtle import Turtle
 ALIGN = "center"
 # tuple containing font, fontsize and font option
 FONT = ("Times New Roman", 20, "bold")
-# tuple containing positions of the corners, use to draw border
-CORNER_POSITIONS = ((290, 290), (290, -290), (-290, -290), (-290, 290))
 
 class Scoreboard(Turtle):
-    """Class creating a score text on the top of the screen
-
-    Args:
-        Turtle (class): superclass of Scoreboard class
+    """Class to keep the score and display it on the screen.
 
     Attributes:
-        score (int): initial score, default 0 
-        highscore (int): highest score ever achieved
-    """
-    def __init__(self):
-        """Creates object that displays score
-        """
+        score (int): The player's current score.
+        highscore (int): The highest score achieved by the player.
 
+    Methods:
+        reset(): Compare score with highscore and replace if necessary, then reset the score.
+        display_score(): Display the current score and highscore on the screen.
+    """
+    
+    def __init__(self):
+        """Create a Scoreboard object to display the current score and highscore."""
+        
         super().__init__()
         self.score = 0
         with open("data.txt") as data:
@@ -51,16 +50,9 @@ class Scoreboard(Turtle):
         self.hideturtle()
         self.goto(0, 290)
 
-    # def game_over(self):
-    #     """Display 'Game Over' and ends the game when snake hits wall or tail
-    #     """
-
-    #     self.goto(0,0)
-    #     self.write("Game Over", align="center", font=("Times New Roman", 20, "bold"))
-
     def reset(self):
-        """Compare score with highscore and replace if that's the case, then reset the score
-        """
+        """Compare score with highscore and replace if necessary, then reset the score."""
+        
         if self.score > self.highscore:
             self.highscore = self.score
             with open("data.txt", mode="w") as data:
@@ -69,9 +61,10 @@ class Scoreboard(Turtle):
         self.display_score()
 
     def display_score(self):
-        """Display score and highscore on top of the screen"""
+        """Display the current score and highscore on the screen."""
+        
         self.clear()
-        self.write(f"Score: {self.score} High Score: {self.highscore}", align="center", font=("Times New Roman", 20, "bold"))
+        self.write(f"Score: {self.score} High Score: {self.highscore}", align=ALIGN, font=FONT)
 
     
 
@@ -81,6 +74,8 @@ class Border(Turtle):
     Args:
         Turtle (class): superclass of Border class
     """
+    CORNER_POSITIONS = ((290, 290), (290, -290), (-290, -290), (-290, 290))
+
     def __init__(self, positions=CORNER_POSITIONS):
         """Create visual borders, which crossing causes the end of game
 
@@ -95,5 +90,5 @@ class Border(Turtle):
         self.penup()
         self.goto(-290, 290)
         self.pendown()
-        for item in (positions):
+        for item in positions:
             self.goto(item)
